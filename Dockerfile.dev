@@ -1,0 +1,9 @@
+FROM node:22-alpine
+
+RUN mkdir /home/app
+
+WORKDIR /home/app
+
+EXPOSE 3000
+
+CMD ["npm" , "run", "dev"] 
