@@ -33,7 +33,7 @@ export default function Sidebar() {
             &copy; {new Date().getFullYear()} Fresh Coffee. All rights reserved.
           </p>
         </footer>
-      </div>    
+      </div>
     </div>
   );
 }
