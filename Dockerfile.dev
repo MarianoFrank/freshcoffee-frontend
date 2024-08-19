@@ -4,6 +4,6 @@ RUN mkdir /home/app
 
 WORKDIR /home/app
 
-EXPOSE 3000
+EXPOSE 3000 
 
 CMD ["npm" , "run", "dev"] 
