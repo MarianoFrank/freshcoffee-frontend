@@ -1,8 +1,8 @@
 import Category from "./Category";
-
-import { categories } from "../data/categories";
+import { useCategory } from "../context/CategoryContext";
 
 export default function Sidebar() {
+  const { categories } = useCategory();
   return (
     <div className="md:w-72 h-screen fixed flex flex-col">
       <div className="border-r p-4 ">
