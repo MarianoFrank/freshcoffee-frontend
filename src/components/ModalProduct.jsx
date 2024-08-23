@@ -1,29 +1,18 @@
-import { useEffect } from "react";
 import { formatPrice } from "../helpers";
 import { useModal } from "../context/ModalContext";
 import { useOrder } from "../context/OrderContext";
 import { useState } from "react";
 export default function ModalProduct({ children, product }) {
-  const {
-    amount,
-    setAmount,
-    handleClickDecreaseAmount,
-    handleClickIncreaseAmount,
-    handleClickToggleModal,
-  } = useModal();
-
+  const { handleClickToggleModal } = useModal();
   const { handleAddOrder, orders } = useOrder();
 
-  const [editMode, setEditMode] = useState(false);
+  const productAlreadyInCart = orders.find((order) => order.id === product.id);
 
-  //mantiene la cantidad actualizada segun la seleccionada previamente
-  useEffect(() => {
-    const productEdit = orders.filter((order) => order.id === product.id)[0];
-    if (productEdit) {
-      setAmount(productEdit.amount);
-      setEditMode(true);
-    }
-  }, [product]);
+  const editMode = !!productAlreadyInCart;
+
+  const [amount, setAmount] = useState(
+    productAlreadyInCart ? productAlreadyInCart.amount : 1
+  );
 
   return (
     <div className="flex gap-10">
@@ -41,7 +30,14 @@ export default function ModalProduct({ children, product }) {
         </p>
         {/* amount selector */}
         <div className="flex gap-2">
-          <button onClick={() => handleClickDecreaseAmount()}>
+          <button
+            onClick={() => {
+              if (amount === 1) {
+                return;
+              }
+              setAmount(amount - 1);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -58,7 +54,14 @@ export default function ModalProduct({ children, product }) {
             </svg>
           </button>
           {amount}
-          <button onClick={() => handleClickIncreaseAmount()}>
+          <button
+            onClick={() => {
+              if (amount >= 5) {
+                return;
+              }
+              setAmount(amount + 1);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
