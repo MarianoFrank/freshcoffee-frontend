@@ -1,10 +1,12 @@
 import { useOrder } from "../context/OrderContext";
 import Order from "../components/Order";
-//import { useState } from "react";
+import { formatPrice } from "../helpers";
 
 export default function Resume() {
-  //const [total, setTotal] = useState(0);
-  const { orders } = useOrder();
+  const { orders, total } = useOrder();
+
+  const hasOrders = orders.length > 0;
+
   return (
     <aside className="md:w-72 h-screen p-4 overflow-y-scroll ">
       <h1 className=" font-bold text-3xl mb-4">My order</h1>
@@ -18,12 +20,13 @@ export default function Resume() {
         )}
       </div>
 
-      {/* <p>Tota: {total}</p> */}
+      <p>Total: {formatPrice(total)}</p>
       <form action="w-full">
         <div className="mt-5">
           <button
             type="submit"
-            className="bg-yellow-300 hover:bg-yellow-400 rounded-md font-bold w-full text-center cursor-pointer py-2"
+            className={`${hasOrders ? "bg-yellow-300 hover:bg-yellow-400 cursor-pointer" : "bg-slate-300 cursor-not-allowed opacity-50"} rounded-md font-bold w-full text-center py-2`}
+            disabled={!hasOrders}
           >
             Confirm Order
           </button>

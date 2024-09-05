@@ -4,6 +4,9 @@ import Resume from "../components/Resume";
 import { useModal } from "../context/ModalContext";
 import ReactModal from "react-modal";
 import ModalProduct from "../components/ModalProduct";
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const customStyles = {
   content: {
@@ -54,6 +57,7 @@ export default function Layout() {
           </button>
         </div>
       </ReactModal>
+      <ToastContainer />
     </>
   );
 }
