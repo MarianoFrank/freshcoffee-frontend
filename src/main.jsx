@@ -8,7 +8,7 @@ import "./index.css";
 import router from "./router";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <OrderProvider>
       <ModalProvider>
         <CategoryProvider>
@@ -16,5 +16,5 @@ createRoot(document.getElementById("root")).render(
         </CategoryProvider>
       </ModalProvider>
     </OrderProvider>
-  </StrictMode>
+  // </StrictMode>
 );

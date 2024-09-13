@@ -8,7 +8,7 @@ export function CategoryProvider({ children }) {
   //almacena el arreglo de categoria que admite el kiosco
   const [categories, setCategories] = useState([]);
   //almacena la categoria seleccionada o actual
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState({id:1});
   //maneja el click en el sidebar de categorias
   const handleClickCategory = (categoryClicked) => {
     setSelectedCategory(categoryClicked);
