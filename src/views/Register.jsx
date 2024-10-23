@@ -1,34 +1,70 @@
 import { Link } from "react-router-dom";
 import FormField from "../components/FormField";
+import { createRef, useState } from "react";
+import axiosClient from "../../config/axios";
 
 export default function Register() {
+  const nameRef = createRef();
+  const emailRef = createRef();
+  const passwordRef = createRef();
+  const password_confirmationRef = createRef();
+
+  const [errors, setErrors] = useState([]);
+
+  const handleSubmit = async (e) => {
+    console.log(e.preventDefault());
+    const data = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      password_confirmation: password_confirmationRef.current.value,
+    };
+
+    try {
+      const response = await axiosClient.post("/register", data);
+      console.log(response);
+    } catch (error) {
+
+      console.log(Object.values(error.response.data.errors));
+    }
+  };
+
   return (
     <div>
       <p className="text-3xl font-bold text-slate-800">Create account 🍩</p>
-      <form action="" className="mt-5 flex flex-col">
+      <form action="" className="mt-5 flex flex-col" onSubmit={handleSubmit} noValidate>
+        <p>{errors}</p>
         <FormField
           id="name"
           label="Name"
           placeholder="Your name..."
           type="text"
+          name="name"
+          ref={nameRef}
         />
         <FormField
           id="email"
           label="Email"
           placeholder="Your email... mail@example.com"
           type="email"
+          name="email"
+          ref={emailRef}
         />
         <FormField
           id="password"
           label="Password"
           placeholder="Minimum 8 characters"
           type="password"
+          name="password"
+          ref={passwordRef}
         />
         <FormField
-          id="repeat_password"
+          id="password_confirmation"
           label="Repeat Password"
           placeholder="Repeat same password"
           type="password"
+          name="password_confirmation"
+          ref={password_confirmationRef}
         />
         <button
           type="submit"

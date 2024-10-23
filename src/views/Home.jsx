@@ -17,10 +17,6 @@ export default function Home() {
       ).then((res) => res.data.data)
   );
 
-  console.log(data);
-  console.log(error);
-  console.log(isLoading);
-
   return (
     <div className="ml-4">
       <h1 className=" text-3xl font-bold text-slate-800 my-4">
