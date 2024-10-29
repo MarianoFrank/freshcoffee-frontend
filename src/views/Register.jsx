@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import FormField from "../components/FormField";
 import { createRef, useState } from "react";
 import axiosClient from "../../config/axios";
+import { useFieldError } from "../context/FieldErrorsContext";
 
 export default function Register() {
   const nameRef = createRef();
@@ -9,7 +10,7 @@ export default function Register() {
   const passwordRef = createRef();
   const password_confirmationRef = createRef();
 
-  const [errors, setErrors] = useState([]);
+  const { setErrors } = useFieldError();
 
   const handleSubmit = async (e) => {
     console.log(e.preventDefault());
@@ -22,18 +23,25 @@ export default function Register() {
 
     try {
       const response = await axiosClient.post("/register", data);
-      console.log(response);
+      setErrors({});
+      console.log(response.data);
     } catch (error) {
-
-      console.log(Object.values(error.response.data.errors));
+      setErrors(error.response.data.errors);
+      console.log(error.response.data.errors);
     }
   };
 
   return (
     <div>
       <p className="text-3xl font-bold text-slate-800">Create account 🍩</p>
-      <form action="" className="mt-5 flex flex-col" onSubmit={handleSubmit} noValidate>
-        <p>{errors}</p>
+      <form
+        action=""
+        className="mt-5 flex flex-col"
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        {/* {errors ? errors.map((error) => <p key={error}>{error}</p>) : null} */}
+
         <FormField
           id="name"
           label="Name"

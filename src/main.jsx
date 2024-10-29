@@ -6,15 +6,18 @@ import { CategoryProvider } from "./context/CategoryContext";
 import { OrderProvider } from "./context/OrderContext";
 import "./index.css";
 import router from "./router";
+import { FieldErrorProvider } from "./context/FieldErrorsContext";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <OrderProvider>
-      <ModalProvider>
-        <CategoryProvider>
+  <OrderProvider>
+    <ModalProvider>
+      <CategoryProvider>
+        <FieldErrorProvider>
           <RouterProvider router={router} />
-        </CategoryProvider>
-      </ModalProvider>
-    </OrderProvider>
+        </FieldErrorProvider>
+      </CategoryProvider>
+    </ModalProvider>
+  </OrderProvider>
   // </StrictMode>
 );
