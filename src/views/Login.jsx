@@ -1,33 +1,41 @@
 import FormField from "../components/FormField";
 import { Link } from "react-router-dom";
-import axiosClient from "../../config/axios";
-
+import { createRef, useState, useEffect } from "react";
 import { useFieldError } from "../context/FieldErrorsContext";
-import { createRef } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
   const { setErrors } = useFieldError();
+  const { login } = useAuth('/');
 
   const emailRef = createRef();
   const passwordRef = createRef();
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    // Cargar el valor de "rememberMe" de localStorage al montar el componente
+    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
+    setRememberMe(savedRememberMe);
+    return () => {
+      // Esta función se ejecutará al desmontar el componente
+      setErrors({});
+    };
+  }, []);
+
+  const handleRememberMeChange = () => {
+    const newRememberMe = !rememberMe;
+    setRememberMe(newRememberMe);
+    localStorage.setItem("rememberMe", newRememberMe); // Guardar el valor en localStorage
+  };
 
   const handleSubmit = async (e) => {
-    console.log(e.preventDefault());
+    e.preventDefault();
     const data = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
+      remember_me: rememberMe
     };
-
-    try {
-      const response = await axiosClient.post("/login", data);
-      setErrors({});
-      console.log(response.data);
-    } catch (error) {
-      if (error.response) {
-        setErrors(error.response.data.errors);
-        console.log(error.response.data.errors);
-      }
-    }
+    await login(data, setErrors);
   };
 
   return (
@@ -56,12 +64,24 @@ export default function Login() {
           ref={passwordRef}
         />
 
+        <div className="flex items-center gap-x-2 ">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={handleRememberMeChange}
+            id="remember_me"
+            name="remember_me"
+          />
+          <label htmlFor="remember_me" className="text-sm text-gray-700">Remember Me</label>
+        </div>
+
         <button
           type="submit"
           className="mt-4 self-end p-2 rounded-md shadow-md hover:bg-yellow-400 block min-w-20 font-bold border border-yellow-500 text-yellow-700 bg-yellow-300"
         >
           GO !
         </button>
+
         <nav className="mt-5 flex gap-10 justify-between">
           <Link
             to="/auth/register"

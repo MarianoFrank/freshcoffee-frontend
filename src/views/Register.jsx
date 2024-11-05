@@ -1,16 +1,26 @@
 import { Link } from "react-router-dom";
 import FormField from "../components/FormField";
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import axiosClient from "../../config/axios";
 import { useFieldError } from "../context/FieldErrorsContext";
+import { toast, Bounce } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const nameRef = createRef();
   const emailRef = createRef();
   const passwordRef = createRef();
   const password_confirmationRef = createRef();
+  const navigate = useNavigate();
 
   const { setErrors } = useFieldError();
+
+  useEffect(() => {
+    return () => {
+      // Esta función se ejecutará al desmontar el componente
+      setErrors({});
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     console.log(e.preventDefault());
@@ -24,12 +34,51 @@ export default function Register() {
     try {
       const response = await axiosClient.post("/register", data);
       setErrors({});
-      console.log(response.data);
+      toast.success("Account register success", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      navigate('/auth/login');
     } catch (error) {
-      setErrors(error.response.data.errors);
-      console.log(error.response.data.errors);
+      if (error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      }
+      if (error.response.data.error) {
+        toast.error(error.response.data.error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+      if (error.response.data.message) {
+        toast.error(error.response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
     }
-  };
+  }
+
 
   return (
     <div>

@@ -16,9 +16,8 @@ const FormField = forwardRef(
           type={type}
           id={id}
           placeholder={placeholder}
-          className={`outline-slate-800 border rounded-md px-4 py-2 text-slate-800 ${
-            myError ? "border-red-500" : "border-slate-300"
-          }`}
+          className={`outline-slate-800 border rounded-md px-4 py-2 text-slate-800 ${myError ? "border-red-500" : "border-slate-300"
+            }`}
           ref={ref}
           name={name}
           onChange={() => handleInputChange(name)}

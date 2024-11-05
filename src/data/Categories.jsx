@@ -1,12 +1,14 @@
 import { toast } from "react-toastify";
-import axiosClient from "../../config/axios";
+import api from "../../config/axiosPrivate";
 const getCategories = async () => {
   try {
-    const { data } = await axiosClient("/categories");
+    const { data } = await api.get("/categories");
 
     return data.data;
   } catch (error) {
-    errorToast(error.message);
+    if (error?.message) {
+      console.log(error.message)
+    }
     return [];
   }
 };
