@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
   const { setErrors } = useFieldError();
-  const { login } = useAuth('/');
+  const { login } = useAuth("/");
 
   const emailRef = createRef();
   const passwordRef = createRef();
@@ -33,7 +33,7 @@ export default function Login() {
     const data = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
-      remember_me: rememberMe
+      remember_me: rememberMe,
     };
     await login(data, setErrors);
   };
@@ -72,7 +72,9 @@ export default function Login() {
             id="remember_me"
             name="remember_me"
           />
-          <label htmlFor="remember_me" className="text-sm text-gray-700">Remember Me</label>
+          <label htmlFor="remember_me" className="text-sm text-gray-700">
+            Remember Me
+          </label>
         </div>
 
         <button
