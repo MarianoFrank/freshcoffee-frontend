@@ -1,8 +1,10 @@
 import Category from "./Category";
 import { useCategory } from "../context/CategoryContext";
-
+import { useAuth } from "../../hooks/useAuth";
 export default function Sidebar() {
   const { categories } = useCategory();
+
+  const { logout } = useAuth({ middleware: 'auth' });
   return (
     <div className="md:w-72 h-screen fixed flex flex-col">
       <div className="border-r p-4 ">
@@ -25,7 +27,9 @@ export default function Sidebar() {
       </div>
 
       <div className="border-r flex-1 w-full flex flex-col px-5 pt-10 justify-between">
-        <button className="bg-red-600  px-4 py-2 rounded-md text-white font-bold">
+        <button onClick={
+          logout
+        } className="bg-red-600  px-4 py-2 rounded-md text-white font-bold">
           Cancel order
         </button>
         <footer className="text-center text-sm pb-2 text-slate-400">

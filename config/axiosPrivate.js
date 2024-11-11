@@ -1,12 +1,12 @@
 //cliente axios para peticiones con access_token
 import axios from "axios";
 import { InvalidTokenError } from "jwt-decode";
-import { toast, Bounce } from "react-toastify";
 /*
 Todas las peticiones que llamemos con el cliente axios "api"
 verificaran en cada respuesta si el acces_token esta expirado,
 luego pediran uno nuevo y reintentaran la peticion.
 */
+
 
 // Configurar Axios
 const api = axios.create({
@@ -43,25 +43,9 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true; // Marcar la solicitud como reintentada
 
-      // Eliminar el token de acceso en caso de que esté expirado
-      localStorage.removeItem("ACCESS_TOKEN");
-
       // Obtener el refresh token solo si está disponible
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");
       if (!refreshToken) {
-        // Si no hay refresh token, redirigir al login o manejar el error
-        toast.error("Session expired. Please log in again.", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-
         return Promise.reject(new InvalidTokenError()); // No hacer más intentos
       }
 
@@ -82,19 +66,7 @@ api.interceptors.response.use(
         // Reintentar la solicitud original con el nuevo token
         return api(originalRequest);
       } catch (refreshError) {
-        // Si no se pudo renovar el token, redirigir al login
-        toast.error("Token could not be renewed. Please log in again.", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-
+        // Si no se pudo renovar el token
         return Promise.reject(new InvalidTokenError()); // No hacer más intentos
       }
     }
@@ -102,5 +74,6 @@ api.interceptors.response.use(
     return Promise.reject(error); // Si no es un 401 o ya se intentó renovar, propagar el error
   }
 );
+
 
 export default api;

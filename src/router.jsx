@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./layouts/Layout";
 import AuthLayout from "./layouts/AuthLayout";
 
@@ -14,11 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        ),
+        element: <Home />,
       },
     ],
   },

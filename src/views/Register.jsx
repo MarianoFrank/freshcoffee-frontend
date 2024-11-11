@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import FormField from "../components/FormField";
-import { createRef, useEffect, useState } from "react";
-import axiosClient from "../../config/axios";
+import { createRef, useEffect } from "react";
 import { useFieldError } from "../context/FieldErrorsContext";
-import { toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Register() {
   const nameRef = createRef();
@@ -22,61 +21,17 @@ export default function Register() {
     };
   }, []);
 
+  const { register } = useAuth({ middleware: 'guest', url: '/auth/login' });
+
   const handleSubmit = async (e) => {
-    console.log(e.preventDefault());
+    e.preventDefault()
     const data = {
       name: nameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
       password_confirmation: password_confirmationRef.current.value,
     };
-
-    try {
-      const response = await axiosClient.post("/register", data);
-      setErrors({});
-      toast.success("Account register success", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      navigate('/auth/login');
-    } catch (error) {
-      if (error.response.data.errors) {
-        setErrors(error.response.data.errors);
-      }
-      if (error.response.data.error) {
-        toast.error(error.response.data.error, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-      if (error.response.data.message) {
-        toast.error(error.response.data.message, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-    }
+    await register(data);
   }
 
 
@@ -144,6 +99,6 @@ export default function Register() {
           </Link>
         </nav>
       </form>
-    </div>
+    </div >
   );
 }

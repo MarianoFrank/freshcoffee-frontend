@@ -6,7 +6,6 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
   const { setErrors } = useFieldError();
-  const { login } = useAuth("/");
 
   const emailRef = createRef();
   const passwordRef = createRef();
@@ -28,6 +27,8 @@ export default function Login() {
     localStorage.setItem("rememberMe", newRememberMe); // Guardar el valor en localStorage
   };
 
+  const { login } = useAuth({ middleware: 'guest', url: '/' });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -35,7 +36,7 @@ export default function Login() {
       password: passwordRef.current.value,
       remember_me: rememberMe,
     };
-    await login(data, setErrors);
+    login(data);
   };
 
   return (

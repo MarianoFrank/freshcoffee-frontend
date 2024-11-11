@@ -3,14 +3,16 @@ import useSWR from "swr";
 import Product from "../components/Product";
 import { PuffLoader } from "react-spinners";
 import api from "../../config/axiosPrivate";
-import { InvalidTokenError } from "jwt-decode";
-import { useLoginModal } from "../context/ModalLoginContext";
-import { useNavigate } from "react-router-dom";
+import { toast, Bounce } from "react-toastify";
+import useApiErrorHandler from "../../hooks/handleApiError";
+//import { useLoginModal } from "../context/ModalLoginContext";
+import { useAuth } from "../../hooks/useAuth";
 export default function Home() {
   const { selectedCategory } = useCategory();
-  const { setShowLoginModal } = useLoginModal();
+  // const { setShowLoginModal } = useLoginModal();
   const categoryId = selectedCategory?.id;
-  const navigate = useNavigate();
+
+  const { handleError } = useApiErrorHandler()
   const { data, error, isLoading } = useSWR(
     `/products?page=1&available=true&category_id=${categoryId}`,
     () =>
@@ -33,7 +35,8 @@ export default function Home() {
 
           por ende simplemente aca redireccionare a login pero que sepa que funciona la modal
           */
-          navigate("/auth/login");
+          // Si no hay refresh token, redirigir al login o manejar el error
+          handleError(error);
         })
   );
 

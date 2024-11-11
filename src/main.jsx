@@ -8,17 +8,20 @@ import { FieldErrorProvider } from "./context/FieldErrorsContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ModalLoginProvider } from "./context/ModalLoginContext";
-
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   <>
+
     <ModalProvider>
-      <ModalLoginProvider>
-        <FieldErrorProvider>
+      <FieldErrorProvider>
+        <ModalLoginProvider>
           <RouterProvider router={router} />
-        </FieldErrorProvider>
-      </ModalLoginProvider>
+        </ModalLoginProvider >
+      </FieldErrorProvider>
     </ModalProvider>
+
+
+
     <ToastContainer />
   </>
 
