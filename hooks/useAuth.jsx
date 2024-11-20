@@ -9,12 +9,17 @@ export function useAuth({ middleware, url }) {
     const { setErrors } = useFieldError(); //sirve para setear los errores de los field en caso que el usuario los haya ingresado mal
     const navigate = useNavigate();
 
-    const redirect = () => {
+
+    const redirect = (user) => {
         console.log([middleware, url])
-        if (middleware === "guest" && url) {
+        console.log(user)
+        if (middleware == "guest" && user && user.admin) {
+            navigate('/admin');
+        }
+        else if (middleware === "guest" && url) {
             navigate(url);
         }
-        if (middleware === "auth") {
+        else if (middleware === "auth") {
             navigate('/auth/login');
         }
     }
@@ -68,9 +73,12 @@ export function useAuth({ middleware, url }) {
             const user = {
                 name: decodedToken.name,
                 email: decodedToken.email,
+                admin: decodedToken.admin,
             };
+
             localStorage.setItem("USER", JSON.stringify(user));
-            redirect();
+
+            redirect(user);
 
         } catch (error) {
             showError(error);

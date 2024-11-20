@@ -3,10 +3,8 @@ import useSWR from "swr";
 import Product from "../components/Product";
 import { PuffLoader } from "react-spinners";
 import api from "../../config/axiosPrivate";
-import { toast, Bounce } from "react-toastify";
 import useApiErrorHandler from "../../hooks/handleApiError";
 //import { useLoginModal } from "../context/ModalLoginContext";
-import { useAuth } from "../../hooks/useAuth";
 export default function Home() {
   const { selectedCategory } = useCategory();
   // const { setShowLoginModal } = useLoginModal();

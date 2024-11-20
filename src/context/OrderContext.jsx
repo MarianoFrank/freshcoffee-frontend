@@ -77,6 +77,7 @@ export function OrderProvider({ children }) {
     <OrderContext.Provider
       value={{
         orders,
+        setOrders,
         handleAddOrder,
         handleDeleteOrder,
         total,
