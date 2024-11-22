@@ -9,7 +9,7 @@ export default function AdminLayout() {
         <div className="md:flex">
           <AdminSidebar />
           {/* margin left for sidebar fixed */}
-          <main className="ml-72 flex-1">
+          <main className="flex-1">
             <Outlet />
           </main>
         </div>

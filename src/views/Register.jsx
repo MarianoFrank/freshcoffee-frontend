@@ -92,7 +92,7 @@ export default function Register() {
             Already registered? Log in now.
           </Link>
           <Link
-            to="/auth/reset-password"
+            to="/auth/forgot-password"
             className="text-slate-600 text-sm hover:text-yellow-600 "
           >
             Forgot your password, reset it

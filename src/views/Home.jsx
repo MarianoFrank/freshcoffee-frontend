@@ -12,10 +12,10 @@ export default function Home() {
 
   const { handleError } = useApiErrorHandler()
   const { data, error, isLoading } = useSWR(
-    `/products?page=1&available=true&category_id=${categoryId}`,
+    `/products?category_id=${categoryId}`,
     () =>
       api
-        .get(`/products?page=1&available=true&category_id=${categoryId}`)
+        .get(`/products?category_id=${categoryId}`)
         .then((res) => res.data.data)
         .catch((error) => {
           /*

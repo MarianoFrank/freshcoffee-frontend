@@ -8,6 +8,8 @@ import Register from "./views/Register";
 import AdminLayout from "./layouts/AdminLayout";
 import Orders from "./views/Orders";
 import Products from "./views/Products";
+import ResetPassword from "./views/ResetPassword";
+import NewPassword from "./views/NewPassword";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,15 @@ const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
+      {
+        path: "forgot-password",
+        element: <ResetPassword />,
+      },
+      {
+        path: "new-password",
+        element: <NewPassword />,
+      },
+
     ],
   },
   {

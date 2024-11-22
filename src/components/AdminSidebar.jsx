@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 export default function AdminSidebar() {
     const location = useLocation();
-    const { logout } = useAuth("auth");
+    const { logout } = useAuth({ middleware: "auth" });
     return (
         <aside className="md:w-48 h-screen p-4 border-r">
             <div className="p-4 flex flex-col gap-10">
