@@ -32,6 +32,7 @@ export default function Register() {
       password_confirmation: password_confirmationRef.current.value,
     };
     await register(data);
+
   }
 
 

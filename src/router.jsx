@@ -10,6 +10,7 @@ import Orders from "./views/Orders";
 import Products from "./views/Products";
 import ResetPassword from "./views/ResetPassword";
 import NewPassword from "./views/NewPassword";
+import OrderDisplay from "./components/OrderDisplay";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,10 @@ const router = createBrowserRouter([
         path: "new-password",
         element: <NewPassword />,
       },
-
+      {
+        path: "verify-email",
+        element: <div className="border border-blue-500 text-blue-500 p-4 rounded-md font-bold  "><p >📩 Please check your email inbox to verify your account.</p></div>,
+      }
     ],
   },
   {
@@ -58,6 +62,10 @@ const router = createBrowserRouter([
         element: <Products />,
       },
     ],
+  },
+  {
+    path: "/order/display",
+    element: <OrderDisplay />,
   },
 ]);
 

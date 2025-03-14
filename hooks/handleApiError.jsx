@@ -24,7 +24,22 @@ export default function useApiErrorHandler() {
         });
       }
       navigate('/auth/login');
-    } else {
+    }
+    else if (error.response.data.message) {
+      toast.error(error.response.data.message, {
+        toastId: 'genericErrorToast', // Asignamos un ID único
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    else {
       // Comprobamos si ya hay un mensaje mostrando
       if (!toast.isActive('genericErrorToast')) {
         toast.error("An error occurred. Please try again.", {

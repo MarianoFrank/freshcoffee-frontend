@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createRef, useState, useEffect } from "react";
 import { useFieldError } from "../context/FieldErrorsContext";
 import { useAuth } from "../../hooks/useAuth";
+import { toast, Bounce } from "react-toastify";
 
 export default function Login() {
   const { setErrors } = useFieldError();
@@ -15,6 +16,22 @@ export default function Login() {
     // Cargar el valor de "rememberMe" de localStorage al montar el componente
     const savedRememberMe = localStorage.getItem("rememberMe") === "true";
     setRememberMe(savedRememberMe);
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('verified') === "true") {
+      toast.success("Your email has been verified. You can now log in.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+
     return () => {
       // Esta función se ejecutará al desmontar el componente
       setErrors({});

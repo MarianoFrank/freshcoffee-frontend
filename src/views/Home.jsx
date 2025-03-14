@@ -40,11 +40,7 @@ export default function Home() {
 
   return (
     <div className="ml-4">
-      <button
-        onClick={async () => api.get("/user").then((r) => console.log(r.data))}
-      >
-        pedir user
-      </button>
+
       <h1 className=" text-3xl font-bold text-slate-800 my-4">
         {selectedCategory ? selectedCategory.name : ""}
       </h1>

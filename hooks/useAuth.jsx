@@ -87,7 +87,7 @@ export function useAuth({ middleware, url }) {
 
     const register = async (data) => {
         try {
-            await axiosClient.post("/register", data);
+            const response = await axiosClient.post("/register", data);
             setErrors({});
             toast.success("Account register success", {
                 position: "top-right",
@@ -100,7 +100,8 @@ export function useAuth({ middleware, url }) {
                 theme: "light",
                 transition: Bounce,
             });
-            redirect();
+            localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
+            navigate("/auth/verify-email");
         } catch (error) {
             showError(error)
         }

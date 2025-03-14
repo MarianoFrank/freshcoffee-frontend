@@ -22,6 +22,13 @@ export default function AdminSidebar() {
                     >
                         Products
                     </Link>
+                    <Link
+                        to="/order/display"
+                        className={`px-4 py-2 rounded text-slate-700 font-bold text-center 
+                            ${location.pathname === "/admin/products" ? "bg-slate-200" : "hover:bg-slate-300"}`}
+                    >
+                        Order display
+                    </Link>
                     <div className=" flex-1 w-full flex flex-col px-5 pt-10 justify-between">
                         <button onClick={
                             logout

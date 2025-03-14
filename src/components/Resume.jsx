@@ -29,8 +29,14 @@ export default function Resume() {
 
     api.post('/orders', data).then(response => {
       if (response.data.message) {
-        toast.success(response.data.message);
-        setOrders([]); //limpio la orden porque ya se realizó
+        toast.success(
+          <>
+            Order completed successfully. Your order number <strong className="text-xl">#{response.data.order_id}</strong> will appear on the screen.
+          </>,
+          {
+            autoClose: 10000, // La notificación se cerrará automáticamente después de 10 segundos
+          }
+        ); setOrders([]); //limpio la orden porque ya se realizó
       }
     }).catch(error => {
       handleError(error);
